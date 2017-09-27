@@ -22,6 +22,20 @@ Each employee can:
 call your class Employee and receive all the data in the constructor in the order listed
 */
 
+class Employee {
+  constructor(first_name, last_name, email, age) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+  }
+  makeWidget() {
+    return `${this.first_name} ${this.last_name} Widget`;
+  }
+}
+
+var daveSmith = new Employee("Dave", "Smith", "davesmith@gmail.com", 42);
+console.log(daveSmith);
 
 
 /*
@@ -41,6 +55,21 @@ call your class Manager
 
 */
 
+class Manager {
+  constructor(first_name, last_name, email, age) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+    this.reports = [];
+  }
+  hire(newEmployee) {
+    this.reports.push(newEmployee);
+  }
+  fire(index) {
+    this.reports.splice(index, 1);
+  }
+}
 
 
 
@@ -65,6 +94,51 @@ Everytime they fire an employee they get a bonus of $100 add to their .
 call you class ProgressiveManager
 */
 
+class ProgressiveManager {
+  constructor(first_name, last_name, email, age) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
+    this.age = age;
+    this.reports = [];
+    this.title = "Not a manager";
+    this.bonus = 0;
+  }
+  hire(newEmployee) {
+    this.reports.push(newEmployee);
+    this.updateTitle();
+  }
+  fire(index) {
+    this.reports.splice(index, 1);
+    this.bonus += 100;
+    this.updateTitle();
+  }
+  updateTitle() {
+    var numEmployees = this.reports.length;
+    if (numEmployees === 0) {
+      this.title = "Not a manager";
+    } else if (numEmployees >= 1 && numEmployees <= 3) {
+      this.title = "Barely Manager";
+    } else if (numEmployees >= 4 && numEmployees <= 10) {
+      this.title = "Mostly Manager";
+    } else if (numEmployees >= 11 && numEmployees <= 50) {
+      this.title = "Manager";
+    } else if (numEmployees >= 51 && numEmployees <= 100) {
+      this.title = "Manager Plus";
+    } else {
+      this.title = "Bestest Manager";
+    }
+  }
+}
+
+// testing
+
+var manager = new ProgressiveManager("Nick", "Hathaway", "n", "23");
+manager.hire("a");
+manager.hire("b");
+manager.hire("c");
+manager.hire("d");
+console.log("manager.title:", manager.title);
 
 
 
@@ -90,3 +164,33 @@ It can :
       It should set decrease wear_and_tear_count by 10, and set needs_reboot to false
 
 */
+
+
+class Machine {
+  constructor() {
+    this.widgets_made_count = 0;
+    this.wear_and_tear_count = 0;
+    this.needs_reboot = false;
+  }
+  makeWidgets(num) {
+    this.widgets_made_count += num;
+    this.wear_and_tear_count += Math.floor(num / 50);
+  }
+  fixMachine() {
+    this.needs_reboot = true;
+  }
+  reboot() {
+    var self = this;
+    return function() {
+      self.wear_and_tear_count -= 10;
+      self.needs_reboot = false;
+    }
+  }
+}
+
+
+
+
+
+
+
