@@ -12,6 +12,7 @@ var carDetails = {
 }
 
 // CODE HERE
+var {color, make, model, year} = carDetails;
 
 
 // ========================
